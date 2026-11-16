@@ -44,6 +44,9 @@ async def main():
         if t=='quay':
           await pg.click('details.beat:nth-of-type(1) > summary .bt'); await pg.wait_for_timeout(300)
         R['prod_'+t]=await shot(pg,tag,'05prod_'+t)
+      # đứng yên giữa trang qua một lượt đồng bộ (10 giây): trang không được nhảy về đầu
+      await pg.evaluate("location.hash='#/san-xuat/1'"); await pg.wait_for_timeout(1500); await pg.evaluate("scrollTo(0,1500)"); await pg.wait_for_timeout(12000)
+      R['scroll_after_sync']=await pg.evaluate("scrollY")
       await pg.evaluate("location.hash='#/hieu-ung'"); await pg.wait_for_timeout(1200); R['fx']=await shot(pg,tag,'06fx')
       await pg.click('[data-big="d-3"]'); await pg.wait_for_timeout(1500); await pg.screenshot(path=f"{OUT}/{tag}_07fxbig.png"); await pg.click('#closeSheet')
       await pg.evaluate("location.hash='#/kenh'"); await pg.wait_for_timeout(1200); await pg.screenshot(path=f"{OUT}/{tag}_08kenh.png")

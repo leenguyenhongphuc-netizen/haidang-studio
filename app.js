@@ -176,10 +176,15 @@ function render(){
   // keep focus & scroll on re-render of same view
   const active = document.activeElement && document.activeElement.id;
   const keepVal = active && document.activeElement.value;
+  /* giữ nguyên chỗ đang đọc khi trang vẽ lại (dữ liệu mới về, vừa lưu) */
+  const sameView = v.dataset.route === location.hash, y = window.scrollY;
+  if (sameView){ v.style.minHeight = v.offsetHeight + "px"; clearTimeout(render._t); render._t = setTimeout(() => { v.style.minHeight = ""; }, 1500); }
+  v.dataset.route = location.hash;
   fn(v, r);
+  if (sameView && Math.abs(window.scrollY - y) > 1) window.scrollTo(0, y);
   if (active){ const el = document.getElementById(active); if (el && el !== document.activeElement){ if (keepVal != null && "value" in el && el.dataset.keep !== "0") el.value = keepVal; el.focus(); } }
 }
-window.addEventListener("hashchange", () => { $("#sheet").classList.remove("open"); $("#sheetBg").classList.remove("open"); window.scrollTo(0,0); render(); });
+window.addEventListener("hashchange", () => { $("#view").style.minHeight = ""; $("#sheet").classList.remove("open"); $("#sheetBg").classList.remove("open"); window.scrollTo(0,0); render(); });
 
 /* ---------- views ---------- */
 const PREP = [

@@ -20,7 +20,7 @@ async function dec(buf){
 window.HD_DEC = dec;
 
 /* db cùng kiểu với Claude, chạy trên Supabase */
-const listeners = {}; let polling = null;
+const listeners = {}, sigs = {}; let polling = null;
 async function poll(){
   if (polling) return polling;
   polling = (async () => {
@@ -28,6 +28,9 @@ async function poll(){
       const rows = await rpc("hd_list", {p:PASS}) || [];
       const by = {}; rows.forEach(r => { if (!r.deleted) (by[r.col] = by[r.col] || []).push(r); });
       Object.keys(listeners).forEach(c => {
+        const sig = JSON.stringify((by[c] || []).map(r => [r.id, r.updated_at]));
+        if (sigs[c] === sig) return;   /* không có gì mới thì không vẽ lại trang */
+        sigs[c] = sig;
         const docs = (by[c] || []).map(r => ({id:r.id, data:() => r.data}));
         listeners[c].forEach(l => { try{ l.cb({docs, metadata:{fromCache:false}}); }catch(e){ console.error(e); } });
       });
@@ -40,7 +43,7 @@ async function poll(){
 }
 let soonT = null; const soon = () => { clearTimeout(soonT); soonT = setTimeout(poll, 400); };
 const db = Object.freeze({
-  collection: c => ({ onSnapshot(cb, err){ (listeners[c] = listeners[c] || []).push({cb, err}); soon(); return () => { listeners[c] = listeners[c].filter(x => x.cb !== cb); }; } }),
+  collection: c => ({ onSnapshot(cb, err){ (listeners[c] = listeners[c] || []).push({cb, err}); delete sigs[c]; soon(); return () => { listeners[c] = listeners[c].filter(x => x.cb !== cb); }; } }),
   doc: path => { const [c, ...rest] = path.split("/"); const id = rest.join("/");
     return { set: async data => { await rpc("hd_put", {p:PASS, c, i:id, d:data}); soon(); },
              delete: async () => { await rpc("hd_del", {p:PASS, c, i:id}); soon(); } }; }
@@ -52,11 +55,11 @@ async function enter(p, remember){
   const ok = await rpc("hd_check", {p});
   if (!ok) return false;
   PASS = p; AES = await deriveKey(p);
-  const r = await fetch("trip.enc?v=202611161947"); const js = await dec(await r.arrayBuffer());
+  const r = await fetch("trip.enc?v=202611162000"); const js = await dec(await r.arrayBuffer());
   (new Function(js))();
   if (remember){ try{ localStorage.setItem("hd:pass", p); }catch(_){} }
   document.getElementById("gate").classList.add("hide");
-  const s = document.createElement("script"); s.src = "app.js?v=202611161947"; document.body.appendChild(s);
+  const s = document.createElement("script"); s.src = "app.js?v=202611162000"; document.body.appendChild(s);
   setInterval(() => { if (!document.hidden) poll(); }, 10000);
   return true;
 }
