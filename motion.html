@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hải Đăng · Chuyển động</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Be+Vietnam+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#121A1F;--lamp:#FFC83D;--paper:#FAF8F3;--muted:#5B6670}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Be Vietnam Pro',sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:0 0 8px}
+h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(30px,6vw,52px);line-height:1;letter-spacing:-.02em;margin:8px 0 10px}
+.lead{font-size:17px;line-height:1.6;max-width:62ch;margin:0 0 20px}
+.frame{position:relative;width:100%;aspect-ratio:16/9;background:var(--ink);overflow:hidden}
+.stage{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:0 0;overflow:hidden;background:var(--ink)}
+.layer{position:absolute;inset:0;visibility:hidden}
+.photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform,opacity}
+.disp{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;letter-spacing:-.02em;line-height:.95}
+.mask{overflow:hidden;display:block}
+.mask>*{display:block;will-change:transform}
+.beam{position:absolute;height:0;transform-origin:0 0;will-change:transform,opacity}
+.beam>div{position:absolute;left:0;background:var(--lamp);clip-path:polygon(0 48%,100% 0,100% 100%,0 52%);transform-origin:0 50%;will-change:transform}
+.lampdot{position:absolute;width:24px;height:24px;margin:-12px 0 0 -12px;border-radius:50%;background:var(--lamp);will-change:transform,opacity}
+.halo{position:absolute;width:24px;height:24px;margin:-12px 0 0 -12px;border-radius:50%;border:3px solid var(--lamp);will-change:transform,opacity}
+.controls{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 8px;align-items:center}
+button{font:inherit;font-weight:700;font-size:16px;border:0;padding:14px 18px;background:var(--ink);color:var(--paper);cursor:pointer}
+button.main{background:var(--lamp);color:var(--ink)}
+button[aria-pressed=true]{background:var(--lamp);color:var(--ink)}
+button:focus-visible{outline:3px solid var(--lamp);outline-offset:2px}
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px;margin-top:32px}
+.notes h2{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:24px;margin:0 0 8px;letter-spacing:-.01em}
+.notes p{margin:0;font-size:16px;line-height:1.6}
+.credit{margin-top:32px;font-size:13px;color:var(--muted);line-height:1.6}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="frame" id="frame"><div class="stage" id="stage">
+
+  <!-- 1 intro -->
+  <div class="layer" id="intro">
+    <img class="photo" id="i-photo" src="img/thaphae.jpg" alt="">
+    <div id="i-dim" style="position:absolute;inset:0;background:var(--ink);opacity:0"></div>
+    <div class="beam" id="i-beam" style="left:90px;top:70px;width:1700px"><div id="i-beamin" style="top:-260px;width:1700px;height:520px;opacity:.5"></div></div>
+    <div class="halo" id="i-halo" style="left:90px;top:70px;opacity:0"></div>
+    <div class="lampdot" id="i-lamp" style="left:90px;top:70px;opacity:0"></div>
+    <div id="i-text" style="position:absolute;left:330px;top:372px">
+      <div style="display:flex;align-items:center;gap:36px">
+        <span class="mask"><svg id="i-mark" width="210" height="140" viewBox="0 0 150 100"><path fill="#FFC83D" fill-rule="evenodd" d="M20 8 H52 A42 42 0 0 1 52 92 H20 Z M37 25 H52 A25 25 0 0 1 52 75 H37 Z"/><polygon fill="#FFC83D" points="4,43 96,43 150,35 150,65 96,57 4,57"/></svg></span>
+        <span class="mask" style="padding:6px 8px 26px 0;margin:-6px 0 -26px"><span id="i-word" class="disp" style="font-size:150px;white-space:nowrap;color:var(--lamp)">hải đăng</span></span>
+      </div>
+      <span class="mask" style="margin-top:20px"><span id="i-sub" style="font-size:32px;font-weight:700;color:var(--paper)">Tập 1 · Chiang Mai</span></span>
+    </div>
+  </div>
+
+  <!-- 2 day transition -->
+  <div class="layer" id="day">
+    <img class="photo" id="d-a" src="img/khaosoi.jpg" alt="">
+    <img class="photo" id="d-b" src="img/chedi.jpg" alt="" style="opacity:0">
+    <div id="d-dim" style="position:absolute;inset:0;background:var(--ink);opacity:0"></div>
+    <div class="beam" id="d-beam" style="left:90px;top:70px;width:1500px"><div id="d-beamin" style="top:-210px;width:1500px;height:420px;opacity:.5"></div></div>
+    <div class="lampdot" id="d-lamp" style="left:90px;top:70px;opacity:0"></div>
+    <div id="d-band" style="position:absolute;left:0;top:250px;width:1280px;height:220px;will-change:transform">
+      <div id="d-fill" style="position:absolute;inset:0;background:var(--lamp);clip-path:polygon(0 0,82% 0,100% 18%,100% 82%,82% 100%,0 100%);transform-origin:0 50%;will-change:transform"></div>
+      <div id="d-text" style="position:absolute;left:96px;top:0;height:220px;display:flex;align-items:center;gap:40px">
+        <span class="mask" style="padding-bottom:10px;margin-bottom:-10px"><span id="d-txt" style="display:flex;align-items:center;gap:40px">
+          <span class="disp" style="font-size:150px;display:flex;align-items:center;line-height:1"><span style="display:block;height:1.15em;line-height:1.15em">Ngày&nbsp;</span><span style="position:relative;display:block;width:.62em;height:1.15em;overflow:hidden"><span id="d-num" style="position:absolute;left:0;top:0;display:flex;flex-direction:column;will-change:transform"><span style="display:block;height:1.15em;line-height:1.15em">1</span><span style="display:block;height:1.15em;line-height:1.15em">2</span></span></span></span>
+          <span style="font-size:30px;font-weight:500;line-height:1.35">Thứ Ba · 8/12<br>Chiang Mai</span>
+        </span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 lower third -->
+  <div class="layer" id="lt">
+    <img class="photo" id="l-photo" src="img/chedi.jpg" alt="">
+    <div style="position:absolute;left:64px;bottom:72px;display:flex;flex-direction:column;align-items:flex-start">
+      <span class="mask"><span id="l-name" class="disp" style="background:var(--lamp);font-size:56px;padding:14px 24px 18px">Wat Chedi Luang</span></span>
+      <span class="mask"><span id="l-sub" style="background:var(--ink);color:var(--paper);font-size:24px;font-weight:500;padding:10px 24px">tháp gạch cao 82 mét</span></span>
+    </div>
+    <div style="position:absolute;right:64px;bottom:72px;display:flex;flex-direction:column;align-items:flex-end">
+      <span class="mask"><span id="l-price" class="disp" style="background:var(--lamp);font-size:56px;padding:14px 24px 18px">50 baht</span></span>
+      <span class="mask"><span id="l-psub" style="background:var(--ink);color:var(--paper);font-size:24px;font-weight:500;padding:10px 24px">vé vào (ví dụ)</span></span>
+    </div>
+  </div>
+
+  <!-- 4 outro -->
+  <div class="layer" id="out">
+    <img class="photo" id="o-photo" src="img/thaphae.jpg" alt="">
+    <div id="o-dark" style="position:absolute;inset:0;background:var(--ink);opacity:0"></div>
+    <div class="beam" id="o-beam" style="left:640px;top:250px;width:1400px;opacity:0"><div style="top:-110px;width:1400px;height:220px;opacity:.85"></div></div>
+    <div class="halo" id="o-halo" style="left:640px;top:250px;opacity:0"></div>
+    <div class="lampdot" id="o-lamp" style="left:640px;top:250px;opacity:0"></div>
+    <div style="position:absolute;left:0;right:0;top:330px;text-align:center;color:var(--paper)">
+      <span class="mask" style="display:inline-block"><span id="o-k1" style="font-size:26px;font-weight:700;color:var(--lamp)">Đèn của ngày</span></span><br>
+      <span class="mask" style="display:inline-block;margin-top:14px;padding-bottom:14px"><span id="o-k2" class="disp" style="font-size:84px">mai mình lên Chiang Rai.</span></span>
+    </div>
+  </div>
+</div></div>
+
+<div class="controls">
+  <button class="main" data-play="all">Phát cả đoạn</button>
+  <button data-play="intro">Mở tập</button>
+  <button data-play="day">Sang ngày mới</button>
+  <button data-play="lt">Chữ dưới màn hình</button>
+  <button data-play="out">Đèn của ngày</button>
+  <button id="slow" aria-pressed="false">Xem chậm 0,25x</button>
+</div>
+
+</div>
+
+<script>try{if(parent!==window&&parent.TRIP){window.TRIP=parent.TRIP;window.PLACES=parent.PLACES;}}catch(e){}if(!window.TRIP)document.write('<script src="trip.js"><\/script><script src="places.js"><\/script>');</script>
+<script>
+(function(){
+  const T=window.TRIP; if(!T) return;
+  const n=Number(new URLSearchParams(location.search).get("ep"))||1;
+  const ep=T.episodes.find(e=>e.n===n)||T.episodes[0];
+  const d1=T.days.find(x=>x.d===ep.days[0]), d2=T.days.find(x=>x.d===ep.days[0]+1)||d1;
+  const nextEp=T.episodes.find(e=>e.n===n+1);
+  const im=k=>k?"img/"+k+".jpg":null;
+  const set=(id,v)=>{const el=document.getElementById(id); if(el&&v!=null) el.textContent=v;};
+  const pic=(id,k)=>{const el=document.getElementById(id); if(el&&k) el.src=k;};
+  set("i-sub","Tập "+n+" · "+ep.place);
+  const nums=document.querySelectorAll("#d-num > span"); if(nums.length===2){nums[0].textContent=d1.d;nums[1].textContent=d2.d;}
+  const parts=d2.date.split(" "); const dl=document.querySelector("#d-txt > span:last-child");
+  if(dl) dl.innerHTML=parts.slice(0,-1).join(" ")+" · "+parts.slice(-1)[0]+"<br>"+d2.city;
+  const pl=(window.PLACES||{})[d2.d]||[]; const p=pl.find(x=>x[2])||pl[0];
+  if(p){ set("l-name",p[0].replace(/\s*\(.*\)$/,"")); set("l-sub",d2.city); }
+  set("l-price","___ baht"); set("l-psub","giá thật điền sau");
+  set("o-k2", n===7 ? "mai là đêm giao thừa." : nextEp ? "mai mình lên "+nextEp.place.replace("Giao thừa","Bangkok")+"." : "mùa sau đi đâu?");
+  pic("i-photo",im(d1.img)||im(ep.img)); pic("d-a",im(d1.img)||im(ep.img)); pic("d-b",im(d2.img)||im(ep.img));
+  pic("l-photo",im(p&&p[2])||im(d2.img)||im(ep.img)); pic("o-photo",im(T.days.find(x=>x.d===ep.days[1]).img)||im(ep.img));
+})();
+</script>
+<script>
+const stage=document.getElementById('stage'),frame=document.getElementById('frame');
+function fit(){stage.style.transform='scale('+frame.clientWidth/1280+')'}
+addEventListener('resize',fit);fit();
+const $=id=>document.getElementById(id);
+// one easing vocabulary for the whole channel
+const OUT='cubic-bezier(.16,1,.3,1)',      // arrives fast, settles slowly
+      IN='cubic-bezier(.7,0,.84,0)',       // leaves: slow start, fast exit
+      INOUT='cubic-bezier(.65,0,.35,1)',   // moves from A to B
+      SOFT='cubic-bezier(.33,1,.68,1)';    // fades and light
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let SPEED=1,running=[],token=0;
+function a(el,kf,opt){opt=Object.assign({fill:'both',easing:OUT,delay:0},opt);
+ opt.duration/=SPEED;opt.delay/=SPEED;if(reduce){opt.duration=Math.min(opt.duration,150)}
+ const an=el.animate(kf,opt);running.push(an);return an}
+const wait=ms=>new Promise(r=>setTimeout(r,reduce?Math.min(ms,500):ms/SPEED));
+function show(id){document.querySelectorAll('.layer').forEach(l=>l.style.visibility=(l.id===id?'visible':'hidden'))}
+function clear(){running.forEach(x=>x.cancel());running=[]}
+const lineIn=(el,delay,dur=650,from='translateX(-101%)')=>a(el,[{transform:from},{transform:'none'}],{delay,duration:dur,easing:OUT});
+const lineOut=(el,delay,dur=320,to='translateY(-102%)')=>a(el,[{transform:'none'},{transform:to}],{delay,duration:dur,easing:IN,fill:'forwards'});
+// display type is never cut by a mask: it fades in while it moves, so accents and descenders stay whole
+const textIn=(el,delay,dur=700,from='translateY(28px)')=>a(el,[{opacity:0,transform:from},{opacity:1,transform:'none'}],{delay,duration:dur,easing:OUT});
+const textOut=(el,delay,dur=320,to='translateY(-16px)')=>a(el,[{opacity:1,transform:'none'},{opacity:0,transform:to}],{delay,duration:dur,easing:IN,fill:'forwards'});
+['i-mark','i-word','i-sub','o-k1','o-k2','d-txt'].forEach(id=>{const p=document.getElementById(id).parentElement;p.style.overflow='visible'});
+function ignite(lamp,halo,delay){
+ a(lamp,[{opacity:0,transform:'scale(.2)'},{opacity:1,transform:'scale(1)'}],{delay,duration:380,easing:'cubic-bezier(.34,1.56,.64,1)'});
+ if(halo)a(halo,[{opacity:.9,transform:'scale(1)'},{opacity:0,transform:'scale(4.5)'}],{delay:delay+60,duration:700,easing:SOFT});
+}
+
+async function intro(t){show('intro');
+ a($('i-photo'),[{transform:'scale(1)'},{transform:'scale(1.05)'}],{duration:3600,easing:'cubic-bezier(.25,.1,.25,1)'});
+ a($('i-dim'),[{opacity:0},{opacity:.62}],{duration:500,easing:SOFT});
+ ignite($('i-lamp'),$('i-halo'),250);
+ // beam: grows out of the lamp while turning down, overshoots 2 degrees, settles
+ a($('i-beam'),[{opacity:0},{opacity:1}],{delay:380,duration:260,easing:SOFT});
+ a($('i-beamin'),[{transform:'scale(.25)'},{transform:'scale(1)'}],{delay:380,duration:700,easing:OUT});
+ a($('i-beam'),[{transform:'rotate(-6deg)'},{transform:'rotate(32deg)',offset:.78},{transform:'rotate(30deg)'}],{delay:380,duration:1050,easing:INOUT,composite:'add'});
+ // text: three layers, overlapping, each slides out of its own mask
+ textIn($('i-mark'),1050,650,'translateX(-30px)');
+ textIn($('i-word'),1130,750,'translateX(-30px)');
+ textIn($('i-sub'),1280,650);
+ // light retracts into the lamp, then the lamp dims
+ a($('i-beamin'),[{transform:'scale(1)'},{transform:'scale(0)'}],{delay:1200,duration:500,easing:INOUT,fill:'forwards'});
+ a($('i-lamp'),[{opacity:1,transform:'scale(1)'},{opacity:0,transform:'scale(.4)'}],{delay:1900,duration:260,easing:IN,fill:'forwards'});
+ await wait(3000);if(t!==token)return;
+ textOut($('i-sub'),0,280);textOut($('i-word'),50,320);textOut($('i-mark'),90,320);
+ a($('i-dim'),[{opacity:.62},{opacity:0}],{delay:150,duration:450,easing:SOFT,fill:'forwards'});
+ await wait(650);
+}
+
+async function day(t){show('day');
+ a($('d-a'),[{transform:'scale(1.04)'},{transform:'scale(1.07)'}],{duration:1500,easing:'linear'});
+ a($('d-dim'),[{opacity:0},{opacity:.5}],{duration:300,easing:SOFT});
+ ignite($('d-lamp'),null,0);
+ a($('d-beam'),[{opacity:0},{opacity:1}],{delay:60,duration:180,easing:SOFT});
+ a($('d-beam'),[{transform:'rotate(0deg)'},{transform:'rotate(24deg)'}],{delay:60,duration:520,easing:OUT});
+ // beam collapses as the band shoots out from the left
+ a($('d-beamin'),[{transform:'scale(1)'},{transform:'scale(0)'}],{delay:500,duration:300,easing:IN,fill:'forwards'});
+ a($('d-lamp'),[{opacity:1},{opacity:0}],{delay:620,duration:200,easing:IN,fill:'forwards'});
+ a($('d-fill'),[{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{delay:560,duration:520,easing:OUT});
+ textIn($('d-txt'),720,560,'translateX(-30px)');
+ // number flips with a small settle
+ a($('d-num'),[{transform:'translateY(0)'},{transform:'translateY(-1.19em)',offset:.75},{transform:'translateY(-1.15em)'}],{delay:1150,duration:480,easing:INOUT});
+ // next morning comes in behind the band and settles back
+ a($('d-b'),[{opacity:0,transform:'scale(1.08)'},{opacity:1,transform:'scale(1)'}],{delay:1250,duration:900,easing:OUT});
+ a($('d-dim'),[{opacity:.5},{opacity:0}],{delay:1300,duration:600,easing:SOFT,fill:'forwards'});
+ // exit: text leaves first, band follows
+ textOut($('d-txt'),1880,280,'translateX(30px)');
+ a($('d-band'),[{transform:'translateX(0)'},{transform:'translateX(102%)'}],{delay:1980,duration:420,easing:IN,fill:'forwards'});
+ await wait(2600);
+}
+
+async function lt(t){show('lt');
+ a($('l-photo'),[{transform:'scale(1)'},{transform:'scale(1.03)'}],{duration:3000,easing:'linear'});
+ lineIn($('l-name'),150,600);
+ lineIn($('l-sub'),260,560);
+ lineIn($('l-price'),700,600,'translateX(101%)');
+ lineIn($('l-psub'),810,560,'translateX(101%)');
+ await wait(2600);if(t!==token)return;
+ lineOut($('l-psub'),0,260,'translateX(101%)');lineOut($('l-price'),60,280,'translateX(101%)');
+ lineOut($('l-sub'),120,260,'translateX(-101%)');lineOut($('l-name'),180,280,'translateX(-101%)');
+ await wait(600);
+}
+
+async function out(t){show('out');
+ a($('o-photo'),[{transform:'scale(1.05)'},{transform:'scale(1)'}],{duration:4200,easing:'cubic-bezier(.25,.1,.25,1)'});
+ a($('o-dark'),[{opacity:0},{opacity:.85}],{duration:1000,easing:SOFT});
+ ignite($('o-lamp'),$('o-halo'),800);
+ a($('o-beam'),[{opacity:0},{opacity:1,offset:.15},{opacity:1,offset:.8},{opacity:0}],{delay:1050,duration:1500,easing:'linear'});
+ a($('o-beam'),[{transform:'rotate(-170deg)'},{transform:'rotate(-10deg)'}],{delay:1050,duration:1500,easing:INOUT,composite:'add'});
+ textIn($('o-k1'),2450,600,'translateY(16px)');
+ textIn($('o-k2'),2570,800);
+ await wait(4600);
+}
+
+const S={intro,day,lt,out};
+document.querySelectorAll('[data-play]').forEach(b=>b.onclick=async()=>{
+ clear();const t=++token;const k=b.dataset.play;
+ const list=k==='all'?['intro','day','lt','out']:[k];
+ for(const s of list){if(t!==token)return;clear();await S[s](t)}
+});
+$('slow').onclick=e=>{SPEED=SPEED===1?.25:1;e.currentTarget.setAttribute('aria-pressed',SPEED!==1)};
+// poster: intro at rest
+(function(){show('intro');intro(-1);running.forEach(x=>{try{x.currentTime=2000/SPEED;x.pause()}catch(e){}});})();
+</script>
+</body>
+</html>
