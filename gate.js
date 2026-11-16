@@ -52,11 +52,11 @@ async function enter(p, remember){
   const ok = await rpc("hd_check", {p});
   if (!ok) return false;
   PASS = p; AES = await deriveKey(p);
-  const r = await fetch("trip.enc?v=202611161814"); const js = await dec(await r.arrayBuffer());
+  const r = await fetch("trip.enc?v=202611161947"); const js = await dec(await r.arrayBuffer());
   (new Function(js))();
   if (remember){ try{ localStorage.setItem("hd:pass", p); }catch(_){} }
   document.getElementById("gate").classList.add("hide");
-  const s = document.createElement("script"); s.src = "app.js?v=202611161814"; document.body.appendChild(s);
+  const s = document.createElement("script"); s.src = "app.js?v=202611161947"; document.body.appendChild(s);
   setInterval(() => { if (!document.hidden) poll(); }, 10000);
   return true;
 }

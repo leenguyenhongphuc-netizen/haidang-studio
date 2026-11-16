@@ -3,6 +3,7 @@
 <head>
 <meta name="robots" content="noindex, nofollow">
 <meta charset="utf-8">
+<meta name="color-scheme" content="light">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Hải Đăng Studio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -47,7 +48,7 @@ main{margin-left:var(--rail);min-height:100vh}
   .topbar .brand span{font-size:22px}
   .topbar .sync{font-size:13px;color:#8D979E}
   .tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;background:var(--night);z-index:6;padding-bottom:env(safe-area-inset-bottom)}
-  .tabbar a{display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 2px 10px;font-size:12px;color:#AEB6BC;text-decoration:none;border-top:3px solid transparent}
+  .tabbar a{display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 2px 10px;font-size:13px;color:#AEB6BC;text-decoration:none;border-top:3px solid transparent}
   .tabbar a[aria-current=page]{color:var(--bg);border-top-color:var(--accent)}
 }
 
@@ -135,8 +136,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--ink);outline:none}
 .unit{display:inline-flex;border:2px solid var(--ink)}
 .unit button{border:0;background:transparent;padding:0 14px;min-height:42px;font-weight:700;cursor:pointer}
 .unit button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
-.add-grid{display:grid;grid-template-columns:1.2fr auto 1fr 110px;gap:12px;align-items:end}
-.add-grid .note{grid-column:1/-2}.unit{justify-self:start}
+.add-grid{display:grid;grid-template-columns:minmax(0,1.2fr) auto minmax(0,1fr) minmax(0,1fr);gap:12px;align-items:end}
+.add-grid .note{grid-column:1/4}.unit{justify-self:start}.add-grid .wide{white-space:nowrap}
 @media (max-width:700px){.add-grid{grid-template-columns:1fr auto}.add-grid .wide,.add-grid .note{grid-column:1/-1}}
 
 /* production */
@@ -160,7 +161,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--ink);outline:none}
 .dsec>h2{font-size:26px}
 .dsec .q{font-size:17px;margin-top:8px;padding-left:14px;border-left:4px solid var(--accent)}
 .beat{margin-top:18px;background:var(--surface)}
-.beat>summary{list-style:none;display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:12px;align-items:center;padding:14px 16px;cursor:pointer;min-height:56px}
+.shotbox{display:grid;place-items:center;width:44px;height:44px;margin:-8px -6px -8px -10px;cursor:pointer}
+.beat>summary{list-style:none;display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:12px;align-items:center;padding:14px 16px;cursor:pointer;min-height:56px}
 .beat[open]>summary{border-bottom:1px solid var(--line)}
 .beat>summary::-webkit-details-marker{display:none}
 .beat>summary .bt{font-weight:700;font-size:17px}
@@ -199,7 +201,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--ink);outline:none}
 .script em{font-style:normal;padding-left:12px;border-left:4px solid var(--accent);display:block}
 .pipeline{list-style:none;padding:0;margin:0;counter-reset:none}
 .pipeline li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
-.pipeline .dot{width:18px;height:18px;border:3px solid var(--ink);margin-top:4px}
+.pipeline .dot{width:20px;height:20px;border:3px solid var(--line);border-radius:50%;margin-top:3px}
+.pipeline li.ok .dot{border-color:var(--ink)}
 .pipeline li.ok .dot{background:var(--ink)}
 .notice{background:var(--surface);padding:16px 18px;font-size:15px}
 .notice.warn{background:#FBE9C2}
@@ -301,6 +304,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--ink);outline:none}
 <div class="sheet-bg" id="sheetBg"></div>
 <section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Chi tiết ngày"></section>
 
-<script src="gate.js?v=202611161814"></script>
+<script src="gate.js?v=202611161947"></script>
 </body>
 </html>

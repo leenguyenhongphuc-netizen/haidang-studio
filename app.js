@@ -377,7 +377,7 @@ function vMoney(v){
   <section class="sec strip">
     <h2 class="disp" style="font-size:24px;margin-bottom:14px">Ghi một khoản</h2>
     ${addExpenseForm()}
-    <p class="small muted" style="margin-top:12px">Quy đổi 1 baht = <input type="number" id="rate" value="${rate()}" style="width:90px;min-height:34px;padding:4px 8px;display:inline-block" aria-label="Tỷ giá"> đồng. Đổi tỷ giá chỉ áp dụng cho khoản ghi sau.</p>
+    <p class="small muted" style="margin-top:12px">Quy đổi 1 baht = <input type="number" id="rate" value="${rate()}" style="width:96px;min-height:44px;padding:8px;display:inline-block" aria-label="Tỷ giá"> đồng. Đổi tỷ giá chỉ áp dụng cho khoản ghi sau.</p>
   </section>
   <section class="sec">
     <h2 class="disp h-sec" style="margin-bottom:6px">Theo khoản</h2>
@@ -465,7 +465,7 @@ function beatHTML(b, s){
   const att = (x.clips||[]).length + (x.voices||[]).length;
   return `<details class="beat ${b.lamp?"lamp-beat":""}" data-key="${b.key}" ${x._open?"open":""}>
     <summary>
-      <input type="checkbox" class="shot" data-shot="${b.key}" ${x.shot?"checked":""} aria-label="Đã quay: ${esc(b.title)}" onclick="event.stopPropagation()">
+      <label class="shotbox" onclick="event.stopPropagation()"><input type="checkbox" class="shot" data-shot="${b.key}" ${x.shot?"checked":""} aria-label="Đã quay: ${esc(b.title)}"></label>
       <span><span class="bt">${esc(b.title)}</span>${placeOf(s,b)?`<br><span class="meta" style="font-weight:700">Ở: ${esc(placeOf(s,b)[0])}</span>`:""}<br><span class="meta">${say?esc(say.v.replace(/\*\*/g,"").slice(0,90))+(say.v.length>90?"…":""):b.items.length+" dòng"}</span></span>
       <span class="meta num">${x.note?"ghi chú · ":""}${att?att+" tệp":""}</span>
     </summary>
